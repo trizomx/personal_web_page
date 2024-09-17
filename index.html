@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./statics/favicon.ico">
+    <title>个人主页示例</title>
+    <style>
+        :root {
+            --background-light: #f0f4f9;
+            --background-dark: #1e1e1e;
+            --color-light: #333;
+            --color-dark: #e0e0e0;
+            --intro-bg-light: white;
+            --intro-bg-dark: #2e2e2e;
+            --photo-bg-light: url('./statics/img.png');
+            --photo-bg-dark: url('./statics/img-dark.png');
+            --action-btn-bg-light: white;
+            --action-btn-bg-dark: #333;
+            --container-bg-light: white;
+            --container-bg-dark: #2e2e2e;
+            --slider-bg-light: transparent;
+            --slider-bg-dark: #333;
+            --slider-border-light: #000;
+            --slider-border-dark: #e0e0e0;
+            --slider-knob-light: #000;
+            --slider-knob-dark: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Arial", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0 15px;
+            background-color: var(--background-light);
+            color: var(--color-light);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .outer-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .top-section,
+        .bottom-section {
+            transition: background-color 0.3s;
+        }
+
+        .top-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: 8px;
+            margin-bottom: 0px;
+        }
+
+        .intro {
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            background-color: var(--intro-bg-light);
+            border-radius: 20px;
+            padding: 25px;
+            height: 240px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+
+        .intro img {
+            border-radius: 50%;
+            width: 120px;
+            margin-right: 20px;
+        }
+
+        .intro h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .intro p {
+            font-size: 16px;
+            color: gray;
+        }
+
+        .photo-section {
+            position: relative;
+            background: var(--photo-bg-light);
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            height: 240px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .photo-section .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .photo-section .subtitle {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .photo-section .button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            border: none;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .photo-section .button:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .bottom-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .new-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .new-container {
+            background-color: var(--container-bg-light);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            height: 240px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .new-container-1 {
+            position: relative;
+        }
+
+        .new-container-1 h2 {
+            font-size: 24px;
+            margin-bottom: 0;
+        }
+
+        .new-container-1 ul {
+            list-style: none;
+            font-size: 16px;
+            margin-top: auto;
+            padding-left: 0;
+        }
+
+        .new-container-1 li {
+            margin-bottom: 5px;
+        }
+
+        .new-container-2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .illo {
+            width: 100%;
+            height: 100%;
+        }
+
+        .new-container-3 {
+            grid-column: span 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .svg-animation {
+            width: 100%;
+            height: auto;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            background: var(--action-btn-bg-light);
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-size: 16px;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: lightgray;
+            transform: scale(1.05);
+        }
+
+        .separator {
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .dark-mode {
+            background-color: var(--background-dark);
+            color: var(--color-dark);
+        }
+
+        .dark-mode .intro {
+            background-color: var(--intro-bg-dark);
+        }
+
+        .dark-mode .photo-section {
+            background: var(--photo-bg-dark);
+        }
+
+        .dark-mode .new-container {
+            background-color: var(--container-bg-dark);
+        }
+
+        .dark-mode .action-button {
+            background: var(--action-btn-bg-dark);
+            color: var(--color-dark);
+        }
+
+        .mode-toggle {
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .mode-toggle input {
+            display: none;
+        }
+
+        .mode-toggle .slider {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background-color: var(--slider-bg-light);
+            border: 2px solid var(--slider-border-light);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .mode-toggle .slider:before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--slider-knob-light);
+            transition: transform 0.3s, background-color 0.3s;
+            top: 50%;
+            left: 2px;
+            transform: translateY(-50%);
+        }
+
+        .mode-toggle input:checked + .slider {
+            background-color: var(--slider-bg-dark);
+            border-color: var(--slider-border-dark);
+        }
+
+        .mode-toggle input:checked + .slider:before {
+            transform: translateY(-50%) translateX(25px);
+            background-color: var(--slider-knob-dark);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outer-container">
+        <div class="mode-toggle">
+            <input type="checkbox" id="modeSwitch">
+            <label class="slider" for="modeSwitch"></label>
+        </div>
+        <div class="container">
+            <div class="top-section">
+                <div class="intro">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cGF0aCBkPSJNNTAsMEwgNTAsMTAwIEwgMTAwLDEwMCAwLDEwMCBMIDEwMCwwIFoiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZXM9InJvdW5kIiBzdHJva2Utb3BhY2l0eT0iLjIiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==" alt="Profile Picture">
+                    <div>
+                        <h1>个人主页</h1>
+                        <p>欢迎来到我的个人网站。</p>
+                    </div>
+                </div>
+                <div class="photo-section">
+                    <div class="title">我的照片</div>
+                    <div class="subtitle">这里是我的最新照片。</div>
+                    <a href="#" class="button">了解更多</a>
+                </div>
+            </div>
+            <div class="bottom-section">
+                <div class="new-row">
+                    <div class="new-container new-container-1">
+                        <h2>我的最新动态</h2>
+                        <ul>
+                            <li>更新 1</li>
+                            <li>更新 2</li>
+                            <li>更新 3</li>
+                        </ul>
+                    </div>
+                    <div class="new-container new-container-2">
+                        <img class="illo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZD0iTTEwMCwwIEw0OCw4IEw0OCwwIEwxMDAiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZXM9InJvdW5kIiBzdHJva2Utb3BhY2l0eT0iLjIiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==" alt="Illustration">
+                    </div>
+                    <div class="new-container new-container-3">
+                        <svg class="svg-animation" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="white" />
+                        </svg>
+                        <div class="button-container">
+                            <a href="#" class="action-button">按钮</a>
+                            <span class="separator">|</span>
+                            <a href="#" class="action-button">另一个按钮</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+            const modeSwitch = document.getElementById('modeSwitch');
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                modeSwitch.checked = true;
+            } else {
+                modeSwitch.checked = false;
+            }
+        });
+
+        document.getElementById('modeSwitch').addEventListener('change', (event) => {
+            const isDarkMode = event.target.checked;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            localStorage.setItem('dark-mode', isDarkMode);
+        });
+    </script>
+</body>
+
+</html>
